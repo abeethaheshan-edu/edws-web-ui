@@ -1,0 +1,28 @@
+.wizard-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wizard-footer__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+
+  .btn {
+    display: inline-flex;
+    gap: 0.375rem;
+    align-items: center;
+    min-width: 6.5rem;
+    justify-content: center;
+    padding-inline: 1.25rem;
+    font-weight: 500;
+  }
+}
+
+.wizard-footer__group--end {
+  margin-left: auto;
+}

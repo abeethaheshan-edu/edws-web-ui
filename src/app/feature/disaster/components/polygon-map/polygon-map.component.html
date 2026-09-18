@@ -1,0 +1,50 @@
+<div class="polygon-map">
+  <div #mapHost class="polygon-map__canvas" role="application" aria-label="Affected area map"></div>
+
+  @if (!readonly) {
+    <div class="polygon-map__toolbar">
+      @if (mode() === 'draw') {
+        <button type="button" class="map-tool" (click)="undoLastPoint()" [disabled]="!vertexCount()">
+          <app-icon name="undo" [size]="16"></app-icon> Undo point
+        </button>
+        <button type="button" class="map-tool map-tool--primary" (click)="finishDrawing()" [disabled]="!canFinish">
+          <app-icon name="check" [size]="16"></app-icon> Finish
+        </button>
+        <button type="button" class="map-tool" (click)="cancelDrawing()">
+          <app-icon name="close" [size]="16"></app-icon> Cancel
+        </button>
+      } @else {
+        <button type="button" class="map-tool map-tool--primary" (click)="startDrawing()">
+          <app-icon name="polygon" [size]="16"></app-icon>
+          {{ hasBoundary ? 'Redraw' : 'Draw area' }}
+        </button>
+        <button
+          type="button"
+          class="map-tool"
+          [class.map-tool--active]="mode() === 'edit'"
+          [disabled]="!hasBoundary"
+          (click)="toggleEdit()"
+        >
+          <app-icon name="edit" [size]="16"></app-icon> Edit
+        </button>
+        <button type="button" class="map-tool map-tool--danger" [disabled]="!hasBoundary" (click)="clearBoundary()">
+          <app-icon name="trash" [size]="16"></app-icon> Remove
+        </button>
+      }
+    </div>
+
+    <p class="polygon-map__hint">
+      @switch (mode()) {
+        @case ('draw') {
+          Click on the map to drop points, then press Finish. At least 3 points are needed.
+        }
+        @case ('edit') {
+          Drag a point to move it. Click a point to delete it.
+        }
+        @default {
+          Draw the boundary of the affected area on the map.
+        }
+      }
+    </p>
+  }
+</div>

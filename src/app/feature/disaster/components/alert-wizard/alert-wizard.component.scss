@@ -1,0 +1,35 @@
+.wizard {
+  padding-bottom: 7rem;
+}
+
+.wizard__body {
+  min-height: 24rem;
+}
+
+.wizard__bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-top: 1px solid #e9ecf5;
+  background-color: #fff;
+
+  app-wizard-footer {
+    flex: 1 1 22rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .wizard__bar {
+    padding: 0.875rem 1rem;
+  }
+
+  .wizard__bar app-wizard-footer {
+    flex: 1 1 100%;
+  }
+}

@@ -1,0 +1,20 @@
+<form [formGroup]="form" novalidate>
+  <p class="publish__reference">{{ data.referenceCode }} — {{ data.title }}</p>
+
+  <div class="form-field">
+    <label class="form-label" for="note">Publication Note</label>
+    <textarea
+      id="note"
+      class="form-control"
+      rows="3"
+      formControlName="note"
+      placeholder="What changed since the last review..."
+    ></textarea>
+    <form-control-error [control]="form.controls.note" fieldName="Publication note"></form-control-error>
+  </div>
+
+  <div class="form-check">
+    <input id="notify" class="form-check-input" type="checkbox" formControlName="notifySubscribers" />
+    <label class="form-check-label" for="notify">Notify subscribed district officers</label>
+  </div>
+</form>

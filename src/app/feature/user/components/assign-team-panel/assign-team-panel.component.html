@@ -1,0 +1,57 @@
+<app-side-panel
+  title="Assign Team"
+  [subtitle]="admin.fullName + ' · ' + admin.id"
+  submitText="Save Assignments"
+  (dismissed)="offcanvas.dismiss()"
+  (submitted)="onSubmit()"
+>
+  <h3 class="form-section">
+    <app-icon name="shield-check" [size]="16"></app-icon> Reviewers ({{ selectedReviewerIds.size }})
+  </h3>
+
+  @for (user of reviewers; track user.id) {
+    <label class="assign-row" [class.assign-row--selected]="isSelected('reviewer', user.id)">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [checked]="isSelected('reviewer', user.id)"
+        (change)="toggle('reviewer', user.id)"
+      />
+      <app-avatar [name]="user.fullName" [size]="32"></app-avatar>
+      <span class="assign-row__text">
+        <span class="assign-row__name">{{ user.fullName }}</span>
+        <span class="assign-row__meta">{{ user.email }}</span>
+      </span>
+      @if (assignedElsewhere(user)) {
+        <span class="tag tag--plain">{{ user.reportsToAdminId }}</span>
+      }
+    </label>
+  } @empty {
+    <p class="assign-empty">No reviewers available yet.</p>
+  }
+
+  <h3 class="form-section">
+    <app-icon name="layers" [size]="16"></app-icon> Drawers ({{ selectedDrawerIds.size }})
+  </h3>
+
+  @for (user of drawers; track user.id) {
+    <label class="assign-row" [class.assign-row--selected]="isSelected('drawer', user.id)">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [checked]="isSelected('drawer', user.id)"
+        (change)="toggle('drawer', user.id)"
+      />
+      <app-avatar [name]="user.fullName" [size]="32"></app-avatar>
+      <span class="assign-row__text">
+        <span class="assign-row__name">{{ user.fullName }}</span>
+        <span class="assign-row__meta">{{ user.email }}</span>
+      </span>
+      @if (assignedElsewhere(user)) {
+        <span class="tag tag--plain">{{ user.reportsToAdminId }}</span>
+      }
+    </label>
+  } @empty {
+    <p class="assign-empty">No drawers available yet.</p>
+  }
+</app-side-panel>

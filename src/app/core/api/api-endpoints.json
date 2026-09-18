@@ -1,0 +1,28 @@
+{
+  "login": "/auth/login",
+  "refreshToken": "/auth/refresh",
+  "me": "/auth/me",
+  "myAccessPolicy": "/auth/roles/me",
+  "allAccessPolicies": "/auth/roles",
+  "forgotPassword": "/auth/password/forgot",
+  "resetPassword": "/auth/password/reset/{param1}",
+  "updatePassword": "/auth/password/update",
+
+  "officialAll": "/users/officials",
+  "officialCreate": "/users/officials",
+  "officialById": "/users/officials/{param1}",
+  "officialTeam": "/users/officials/{param1}/team",
+  "citizenCreate": "/users/citizens",
+  "citizenById": "/users/citizens/{param1}",
+  "citizensByGnDivision": "/users/citizens/gn-division/{param1}",
+  "citizenFamilyMembers": "/users/citizens/{param1}/family-members",
+
+  "alertAll": "/alerts/all",
+  "alertCreate": "/alerts",
+  "alertDetails": "/alerts/{param1}/details",
+  "alertUpdate": "/alerts/{param1}",
+  "alertDelete": "/alerts/{param1}",
+  "alertStatus": "/alerts/{param1}/status",
+
+  "dashboardSummary": "/dashboard/summary"
+}

@@ -1,0 +1,17 @@
+.read-only-form {
+    .form-group {
+        padding-top:15px;
+
+        input {
+            pointer-events: none;
+        }
+
+        select {
+            pointer-events: none;
+        }
+    }
+}
+
+input:disabled {
+    background-color: white;
+}

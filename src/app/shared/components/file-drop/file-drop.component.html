@@ -1,0 +1,43 @@
+<div
+  class="file-drop"
+  [class.file-drop--active]="dragging()"
+  [class.file-drop--disabled]="disabled"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave()"
+  (drop)="onDrop($event)"
+>
+  <app-icon class="file-drop__icon" name="upload-cloud" [size]="34"></app-icon>
+
+  <p class="file-drop__title">Drag &amp; drop files here</p>
+  <p class="file-drop__browse">
+    or
+    <label class="file-drop__link">
+      browse files
+      <input type="file" multiple hidden [accept]="accept" [disabled]="disabled" (change)="onBrowse($event)" />
+    </label>
+    from your computer
+  </p>
+  <p class="file-drop__hint">{{ hint }}</p>
+</div>
+
+@if (error()) {
+  <p class="file-drop__error">
+    <app-icon name="alert-circle" [size]="14"></app-icon>
+    {{ error() }}
+  </p>
+}
+
+@if (files.length) {
+  <ul class="file-list">
+    @for (file of files; track file.id) {
+      <li class="file-list__item">
+        <app-icon name="file-text" [size]="18"></app-icon>
+        <span class="file-list__name">{{ file.name }}</span>
+        <span class="file-list__size">{{ formatFileSize(file.size) }}</span>
+        <button type="button" class="file-list__remove" aria-label="Remove file" [disabled]="disabled" (click)="remove(file.id)">
+          <app-icon name="close" [size]="16"></app-icon>
+        </button>
+      </li>
+    }
+  </ul>
+}

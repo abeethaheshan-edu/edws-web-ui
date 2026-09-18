@@ -1,0 +1,25 @@
+<div class="search-select">
+  <input
+    #field
+    #instance="ngbTypeahead"
+    type="text"
+    class="form-control"
+    autocomplete="off"
+    [id]="inputId"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [ngModel]="model"
+    [ngModelOptions]="{ standalone: true }"
+    [ngbTypeahead]="search"
+    [editable]="false"
+    [focusFirst]="false"
+    (ngModelChange)="onModelChange($event)"
+    (focus)="focus$.next(field.value)"
+    (click)="click$.next(field.value)"
+    (blur)="onBlur()"
+  />
+
+  <button type="button" class="search-select__toggle" tabindex="-1" aria-label="Show options" (click)="openList()">
+    <app-icon name="chevron-down" [size]="16"></app-icon>
+  </button>
+</div>

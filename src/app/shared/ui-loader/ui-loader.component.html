@@ -1,0 +1,10 @@
+@if (loader().visible) {
+  <div class="ui-loader" role="alert" aria-live="assertive" aria-busy="true">
+    <div class="ui-loader__box">
+      <span class="ui-loader__spinner" aria-hidden="true"></span>
+      @if (loader().message) {
+        <p class="ui-loader__message">{{ loader().message }}</p>
+      }
+    </div>
+  </div>
+}

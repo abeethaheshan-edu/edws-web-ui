@@ -1,0 +1,104 @@
+<div class="page">
+  <div class="stat-grid">
+    @for (stat of stats; track stat.key) {
+      <article class="stat-card">
+        <span class="stat-card__icon" [class]="'stat-card__icon--' + stat.tone">
+          <app-icon [name]="stat.icon" [size]="20"></app-icon>
+        </span>
+
+        <p class="stat-card__label">{{ stat.label }}</p>
+        <p class="stat-card__value">{{ stat.value }}</p>
+
+        @if (stat.chips) {
+          <div class="stat-card__chips">
+            @for (chip of stat.chips; track chip.label) {
+              <span class="chip" [class]="'chip-severity-' + chip.level">{{ chip.label }}</span>
+            }
+          </div>
+        }
+
+        @if (stat.progress) {
+          <div class="stat-card__progress">
+            <div class="progress" role="progressbar" [attr.aria-valuenow]="stat.progress.percentage">
+              <div class="progress-bar" [style.width.%]="stat.progress.percentage"></div>
+            </div>
+            <span class="stat-card__progress-label">{{ stat.progress.label }}</span>
+          </div>
+        }
+      </article>
+    }
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="map-card card">
+      <p class="map-card__placeholder">
+        <app-icon name="map-pin" [size]="22"></app-icon>
+        Live hazard map renders here
+      </p>
+
+      <div class="map-card__overlay">
+        <div class="map-card__panel">
+          <h2 class="map-card__title">Regional Risk Index</h2>
+          <ul class="risk-list">
+            @for (risk of riskLevels; track risk.label) {
+              <li class="risk-list__item">
+                <span class="risk-list__dot" [class]="'risk-list__dot--' + risk.tone"></span>
+                {{ risk.label }}
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="map-card__panel map-card__panel--row">
+          <span class="map-card__sync-icon"><app-icon name="layers" [size]="18"></app-icon></span>
+          <div>
+            <p class="map-card__sync-label">Last Synced</p>
+            <p class="map-card__sync-value">{{ lastSynced }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-card__coverage">
+        <div>
+          <p class="map-card__coverage-label">Provinces</p>
+          <p class="map-card__coverage-value">{{ coverage.provinces }}</p>
+        </div>
+        <div>
+          <p class="map-card__coverage-label">Districts</p>
+          <p class="map-card__coverage-value">{{ coverage.districts }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card feed-card">
+      <header class="feed-card__header">
+        <h2 class="feed-card__title">Activity Feed</h2>
+        <button type="button" class="btn btn-link p-0" (click)="onViewAll()">View All</button>
+      </header>
+
+      <ul class="feed">
+        @for (item of activities; track item.id) {
+          <li class="feed__item">
+            <span class="feed__icon" [class]="'feed__icon--' + item.tone">
+              <app-icon [name]="item.icon" [size]="16"></app-icon>
+            </span>
+
+            <div class="feed__content">
+              <div class="feed__row">
+                <p class="feed__title">{{ item.title }}</p>
+                <span class="feed__time">{{ item.time }}</span>
+              </div>
+              <p class="feed__text">{{ item.description }}</p>
+
+              @if (item.attachment) {
+                <p class="feed__attachment">
+                  <app-icon name="file-text" [size]="14"></app-icon> {{ item.attachment }}
+                </p>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    </section>
+  </div>
+</div>

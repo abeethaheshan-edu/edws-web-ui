@@ -1,0 +1,94 @@
+<section class="step">
+  <header class="step__header">
+    <h2 class="step__title">Affected Area Definition</h2>
+    <p class="step__subtitle">Scope the alert and draw the boundary of the affected area.</p>
+  </header>
+
+  <div class="area-layout">
+    <div class="area-layout__map">
+      <div class="area-scope" [formGroup]="form">
+        <div class="form-field mb-0">
+          <label class="form-label" for="scope">Administrative Scope</label>
+          <select id="scope" class="form-select" formControlName="scope" (change)="onScopeChange()">
+            <option value="">Select Scope</option>
+            @for (option of scopeOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+          <form-control-error [control]="form.controls.scope" fieldName="Administrative scope"></form-control-error>
+        </div>
+
+        <div class="form-field mb-0">
+          <label class="form-label" for="areaName">Specific Area</label>
+          @if (areaOptions(); as options) {
+            <app-search-select
+              inputId="areaName"
+              placeholder="Search or select area"
+              formControlName="areaName"
+              [options]="options"
+              (optionSelect)="onAreaSelect($event?.value || '')"
+            ></app-search-select>
+          } @else {
+            <input
+              id="areaName"
+              class="form-control"
+              formControlName="areaName"
+              placeholder="e.g. Bope-Poddala"
+              (change)="onAreaSelect(form.controls.areaName.value)"
+            />
+          }
+          <form-control-error [control]="form.controls.areaName" fieldName="Specific area"></form-control-error>
+        </div>
+      </div>
+
+      <app-polygon-map
+        [boundary]="boundary()"
+        [center]="mapCenter"
+        [focus]="focus()"
+        [focusZoom]="focus()?.zoom || 11"
+        [focusLabel]="form.controls.areaName.value"
+        (boundaryChange)="onBoundaryChange($event)"
+      ></app-polygon-map>
+
+      <form-control-error
+        [control]="form.controls.boundary"
+        fieldName="Affected area boundary"
+        [messages]="boundaryMessages"
+      ></form-control-error>
+    </div>
+
+    <aside class="area-summary">
+      <header class="area-summary__header">
+        <span>Area Summary</span>
+        <app-icon name="info" [size]="16"></app-icon>
+      </header>
+
+      <dl class="area-summary__list">
+        <div class="area-summary__row">
+          <dt>Estimated Population</dt>
+          <dd>{{ formatPeople(summary().estimatedPopulation) }}</dd>
+        </div>
+        <div class="area-summary__row">
+          <dt>Critical Infrastructure</dt>
+          <dd>{{ summary().criticalInfrastructure }}</dd>
+        </div>
+        <div class="area-summary__row">
+          <dt>Selected Land Area</dt>
+          <dd>{{ formatArea(summary().landAreaSqKm) }}</dd>
+        </div>
+      </dl>
+
+      <p
+        class="area-summary__state"
+        [class.area-summary__state--valid]="summary().boundaryValidated"
+      >
+        <app-icon [name]="summary().boundaryValidated ? 'shield-check' : 'alert-circle'" [size]="16"></app-icon>
+        {{ summary().boundaryValidated ? 'Boundary Validated' : 'No boundary drawn yet' }}
+      </p>
+
+      @if (summary().vertexCount) {
+        <p class="area-summary__meta">{{ summary().vertexCount }} points on the boundary</p>
+      }
+    </aside>
+  </div>
+</section>

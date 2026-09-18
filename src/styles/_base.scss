@@ -1,0 +1,39 @@
+@use "sass:map";
+@use "index" as t;
+
+:root {
+  @each $name, $value in t.$sys {
+    --app-#{$name}: #{$value};
+  }
+  @each $level, $c in t.$severity {
+    --app-severity-#{$level}: #{map.get($c, solid)};
+  }
+
+  --app-sidebar-width: #{t.$sidebar-width};
+  --app-topbar-height: #{t.$topbar-height};
+  --app-content-margin: #{t.$content-margin};
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, .h1 { @include t.type("display"); }
+h2, .h2 { @include t.type("headline-lg"); }
+h3, .h3 { @include t.type("headline-md"); }
+h4, .h4 { @include t.type("headline-sm"); }
+h5, .h5 { @include t.type("title"); }
+h6, .h6 {
+  @include t.type("label");
+  text-transform: uppercase;
+  color: t.color("on-surface-variant");
+}
+
+label, .form-label { @include t.type("label"); }
+code, kbd, pre, samp { @include t.type("mono"); }
+
+@each $name, $style in t.$type-scale {
+  .type-#{$name} { @include t.type($name); }
+}
+.text-numeric { font-variant-numeric: tabular-nums; }

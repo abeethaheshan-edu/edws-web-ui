@@ -1,0 +1,29 @@
+<section class="side-panel">
+  <header class="side-panel__header">
+    <div>
+      <h2 class="side-panel__title">{{ title }}</h2>
+      @if (subtitle) {
+        <p class="side-panel__subtitle">{{ subtitle }}</p>
+      }
+    </div>
+    <button type="button" class="side-panel__close" aria-label="Close panel" (click)="dismissed.emit()">
+      <app-icon name="close" [size]="20"></app-icon>
+    </button>
+  </header>
+
+  <div class="side-panel__body">
+    <ng-content></ng-content>
+  </div>
+
+  @if (showFooter) {
+    <footer class="side-panel__footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="dismissed.emit()">{{ cancelText }}</button>
+      <button type="button" class="btn btn-primary" [disabled]="submitting" (click)="submitted.emit()">
+        @if (submitting) {
+          <span class="spinner-border spinner-border-sm me-2"></span>
+        }
+        {{ submitText }}
+      </button>
+    </footer>
+  }
+</section>

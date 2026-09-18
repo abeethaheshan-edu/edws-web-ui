@@ -1,0 +1,20 @@
+<header class="top-bar">
+  <button type="button" class="top-bar__menu" aria-label="Open navigation" (click)="menuToggle.emit()">
+    <app-icon name="menu" [size]="22"></app-icon>
+  </button>
+
+  <button type="button" class="top-bar__bell" aria-label="Notifications" (click)="onNotifications()">
+    <app-icon name="bell" [size]="20"></app-icon>
+    @if (unreadCount) {
+      <span class="top-bar__dot" aria-hidden="true"></span>
+    }
+  </button>
+
+  <div class="top-bar__user">
+    <app-avatar [name]="currentUser()?.fullName || 'User'" [size]="36"></app-avatar>
+    <div class="top-bar__identity">
+      <span class="top-bar__name">{{ currentUser()?.fullName || 'User' }}</span>
+      <span class="top-bar__role">{{ currentUser()?.role || '' }}</span>
+    </div>
+  </div>
+</header>

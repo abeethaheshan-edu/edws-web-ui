@@ -1,0 +1,54 @@
+<section class="step" [formGroup]="form">
+  <header class="step__header">
+    <h2 class="step__title">Impact Assessment</h2>
+    <p class="step__subtitle">Numbers published with the alert. Estimates from the drawn area are filled in for you.</p>
+  </header>
+
+  @if (summary().boundaryValidated) {
+    <div class="estimate-note">
+      <app-icon name="info" [size]="18"></app-icon>
+      <span>Boundary covers {{ summary().landAreaSqKm | number: '1.0-0' }} km².</span>
+      <button type="button" class="btn btn-link p-0" (click)="applyEstimates()">Recalculate from area</button>
+    </div>
+  }
+
+  <div class="step__grid">
+    <div class="form-field">
+      <label class="form-label" for="estimatedPopulation">Estimated Population Affected</label>
+      <input id="estimatedPopulation" class="form-control" type="number" min="0" formControlName="estimatedPopulation" />
+      <form-control-error [control]="form.controls.estimatedPopulation" fieldName="Estimated population"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="criticalInfrastructure">Critical Infrastructure at Risk</label>
+      <input
+        id="criticalInfrastructure"
+        class="form-control"
+        type="number"
+        min="0"
+        formControlName="criticalInfrastructure"
+      />
+      <form-control-error
+        [control]="form.controls.criticalInfrastructure"
+        fieldName="Critical infrastructure"
+      ></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="displacedFamilies">Displaced Families</label>
+      <input id="displacedFamilies" class="form-control" type="number" min="0" formControlName="displacedFamilies" />
+      <form-control-error [control]="form.controls.displacedFamilies" fieldName="Displaced families"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="casualties">Reported Casualties</label>
+      <input id="casualties" class="form-control" type="number" min="0" formControlName="casualties" />
+      <form-control-error [control]="form.controls.casualties" fieldName="Casualties"></form-control-error>
+    </div>
+
+    <div class="form-field step__span-2">
+      <label class="form-label" for="notes">Response Notes</label>
+      <textarea id="notes" class="form-control" rows="3" formControlName="notes" placeholder="Relief camps, road closures, resource requests..."></textarea>
+    </div>
+  </div>
+</section>

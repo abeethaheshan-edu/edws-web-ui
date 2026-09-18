@@ -1,0 +1,45 @@
+<div class="pagination-bar">
+  @if (showSummary) {
+    <p class="pagination-bar__summary">
+      Showing {{ rangeStart }}–{{ rangeEnd }} of {{ state.totalItems }} records
+    </p>
+  }
+
+  <nav class="pagination-bar__pages" aria-label="Pagination">
+    <button
+      type="button"
+      class="page-button page-button--nav"
+      aria-label="Previous page"
+      [disabled]="state.page === 1"
+      (click)="goTo(state.page - 1)"
+    >
+      <app-icon name="chevron-left" [size]="16"></app-icon>
+    </button>
+
+    @for (slot of slots; track $index) {
+      @if (isGap(slot)) {
+        <span class="page-gap">…</span>
+      } @else {
+        <button
+          type="button"
+          class="page-button"
+          [class.page-button--active]="slot === state.page"
+          [attr.aria-current]="slot === state.page ? 'page' : null"
+          (click)="goTo(+slot)"
+        >
+          {{ slot }}
+        </button>
+      }
+    }
+
+    <button
+      type="button"
+      class="page-button page-button--nav"
+      aria-label="Next page"
+      [disabled]="state.page === totalPages"
+      (click)="goTo(state.page + 1)"
+    >
+      <app-icon name="chevron-right" [size]="16"></app-icon>
+    </button>
+  </nav>
+</div>

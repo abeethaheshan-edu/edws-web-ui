@@ -1,0 +1,86 @@
+.top-bar {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  height: 4rem;
+  padding: 0 2rem;
+  border-bottom: 1px solid #e9ecf5;
+  background-color: #fff;
+}
+
+.top-bar__bell {
+  position: relative;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: none;
+  color: #434656;
+
+  &:hover {
+    background-color: #f2f5fc;
+  }
+}
+
+.top-bar__dot {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: #e02424;
+}
+
+.top-bar__user {
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  padding-left: 1.25rem;
+  border-left: 1px solid #e9ecf5;
+}
+
+.top-bar__identity {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.top-bar__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0b1c30;
+}
+
+.top-bar__role {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.top-bar__menu {
+  display: none;
+  margin-right: auto;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: none;
+  color: #0b1c30;
+
+  &:hover {
+    background-color: #f2f5fc;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .top-bar {
+    padding: 0 1rem;
+  }
+
+  .top-bar__menu {
+    display: inline-flex;
+  }
+}

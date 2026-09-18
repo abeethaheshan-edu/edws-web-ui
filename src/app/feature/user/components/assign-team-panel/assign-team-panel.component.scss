@@ -1,0 +1,46 @@
+.assign-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #eceef6;
+  border-radius: 0.625rem;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #c9d8f7;
+  }
+
+  &--selected {
+    border-color: #0047d3;
+    background-color: #f3f7ff;
+  }
+
+  &__text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0b1c30;
+  }
+
+  &__meta {
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+}
+
+.assign-empty {
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px dashed #dfe3ee;
+  border-radius: 0.625rem;
+  color: #6b7280;
+  font-size: 0.8125rem;
+}

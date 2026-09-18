@@ -1,0 +1,25 @@
+<div class="data-table">
+  @if (showHeader) {
+    <div class="data-table__head" [style.grid-template-columns]="gridTemplate">
+      @for (column of columns; track column.key) {
+        <span class="data-table__heading" [style.text-align]="column.align || 'start'">{{ column.header }}</span>
+      }
+    </div>
+  }
+
+  @if (loading) {
+    <div class="data-table__state">
+      <span class="spinner-border spinner-border-sm me-2"></span> Loading records…
+    </div>
+  } @else if (isEmpty) {
+    <div class="data-table__state data-table__state--empty">
+      <app-icon name="search" [size]="26"></app-icon>
+      <p class="data-table__state-title">{{ emptyTitle }}</p>
+      <p class="data-table__state-text">{{ emptyMessage }}</p>
+    </div>
+  } @else {
+    <div class="data-table__body">
+      <ng-content></ng-content>
+    </div>
+  }
+</div>

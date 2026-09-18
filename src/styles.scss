@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/scss/functions";
+@import "styles/bootstrap-overrides";
+@import "bootstrap/scss/bootstrap";
+
+@import "styles/base";
+@import "styles/cards";
+@import "styles/forms";
+@import "styles/auth";
+@import "styles/app-shell";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");

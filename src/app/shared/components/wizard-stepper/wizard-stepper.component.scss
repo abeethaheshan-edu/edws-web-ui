@@ -1,0 +1,88 @@
+.stepper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepper__item {
+  display: flex;
+  align-items: center;
+}
+
+.stepper__button {
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: start;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.stepper__marker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: #e4e7f0;
+  color: #6b7280;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.stepper__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.stepper__label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.stepper__hint {
+  font-size: 0.6875rem;
+  color: #9aa1b1;
+}
+
+.stepper__line {
+  width: 2.5rem;
+  height: 1px;
+  margin: 0 0.75rem;
+  background-color: #dfe3ee;
+}
+
+.stepper__item--done {
+  .stepper__marker {
+    background-color: #c9dcff;
+    color: #0047d3;
+  }
+
+  .stepper__label {
+    color: #434656;
+  }
+}
+
+.stepper__item--active {
+  .stepper__marker {
+    background-color: #1a5cf3;
+    color: #fff;
+  }
+
+  .stepper__label {
+    color: #0b1c30;
+    font-weight: 600;
+  }
+}

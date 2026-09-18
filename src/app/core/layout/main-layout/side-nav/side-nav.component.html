@@ -1,0 +1,42 @@
+<nav class="side-nav">
+  <div class="side-nav__brand">
+    <div>
+      <span class="side-nav__title">DMC Portal</span>
+      <span class="side-nav__subtitle">National Disaster Mgmt</span>
+    </div>
+
+    <button type="button" class="side-nav__close" aria-label="Close navigation" (click)="closeNav.emit()">
+      <app-icon name="close" [size]="20"></app-icon>
+    </button>
+  </div>
+
+  <ul class="side-nav__list">
+    @for (item of items(); track item.route) {
+      <li>
+        <a
+          class="side-nav__link"
+          [routerLink]="item.route"
+          routerLinkActive="side-nav__link--active"
+        >
+          <app-icon [name]="item.icon" [size]="20"></app-icon>
+          {{ item.label }}
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="side-nav__footer">
+    <button
+      type="button"
+      class="btn btn-primary side-nav__alert"
+      *hasAccess="emergencyElement"
+      (click)="onEmergencyAlert()"
+    >
+      <app-icon name="megaphone" [size]="18"></app-icon> Emergency Alert
+    </button>
+
+    <button type="button" class="side-nav__logout" (click)="onLogout()">
+      <app-icon name="logout" [size]="20"></app-icon> Logout
+    </button>
+  </div>
+</nav>

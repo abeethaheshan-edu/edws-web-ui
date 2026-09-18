@@ -1,0 +1,105 @@
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">Disaster Alerts</h1>
+      <p class="page__subtitle">Create, review and publish early warnings</p>
+    </div>
+
+    <button type="button" class="btn btn-primary new-alert" (click)="createAlert()">
+      <app-icon name="plus" [size]="18"></app-icon> New Alert
+    </button>
+  </header>
+
+  <div class="filter-bar">
+    <div class="filter-bar__search">
+      <app-icon class="filter-bar__search-icon" name="search" [size]="16"></app-icon>
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search by title, reference or area"
+        [value]="filter().search"
+        (input)="updateFilter({ search: $any($event.target).value })"
+      />
+    </div>
+
+    <select class="form-select" [value]="filter().type" (change)="updateFilter({ type: $any($event.target).value })">
+      <option value="">All Types</option>
+      @for (option of typeOptions; track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+
+    <select class="form-select" [value]="filter().status" (change)="updateFilter({ status: $any($event.target).value })">
+      <option value="">All Statuses</option>
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ statusLabels[status] }}</option>
+      }
+    </select>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [showHeader]="true"
+    [isEmpty]="!visibleAlerts().length"
+    emptyTitle="No alerts found"
+    emptyMessage="Adjust the filters, or create a new alert."
+  >
+    @for (alert of visibleAlerts(); track alert.id) {
+      <app-data-table-row [columns]="columns" [clickable]="true" (rowClick)="editAlert(alert)">
+        <div class="cell">
+          <span class="alert-title">{{ alert.title }}</span>
+          <span class="alert-reference">{{ alert.referenceCode }}</span>
+        </div>
+
+        <div class="cell">
+          <span class="tag tag--plain">{{ typeLabels[alert.type] }}</span>
+        </div>
+
+        <div class="cell">
+          <span class="severity-pill" [class]="'severity-pill--' + severityTones[alert.severity]">
+            {{ severityLabels[alert.severity] }}
+          </span>
+        </div>
+
+        <div class="cell cell--muted area">
+          <app-icon name="map-pin" [size]="15"></app-icon>
+          {{ areaLabel(alert) }}
+        </div>
+
+        <div class="cell">
+          <app-status-badge [label]="statusLabels[alert.status]" [tone]="statusTones[alert.status]"></app-status-badge>
+        </div>
+
+        <div class="cell cell--muted">{{ alert.updatedAt }}</div>
+
+        <div
+          class="cell cell--end"
+          ngbDropdown
+          container="body"
+          placement="bottom-end"
+          (click)="$event.stopPropagation()"
+        >
+          <button type="button" class="row-menu" ngbDropdownToggle aria-label="Row actions">
+            <app-icon name="more-vertical" [size]="18"></app-icon>
+          </button>
+
+          <div ngbDropdownMenu>
+            <button type="button" ngbDropdownItem (click)="editAlert(alert)">
+              <app-icon name="edit" [size]="16"></app-icon> Edit alert
+            </button>
+            <button type="button" ngbDropdownItem (click)="publishAlert(alert)">
+              <app-icon name="megaphone" [size]="16"></app-icon> Publish alert
+            </button>
+            <button type="button" ngbDropdownItem class="text-danger" (click)="deleteAlert(alert)">
+              <app-icon name="trash" [size]="16"></app-icon> Delete alert
+            </button>
+          </div>
+        </div>
+      </app-data-table-row>
+    }
+  </app-data-table>
+
+  <div class="mt-4">
+    <app-pagination [state]="pageState()" (pageChange)="onPageChange($event)"></app-pagination>
+  </div>
+</div>

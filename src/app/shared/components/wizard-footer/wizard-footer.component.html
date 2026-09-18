@@ -1,0 +1,25 @@
+<div class="wizard-footer">
+  <div class="wizard-footer__group">
+    <ng-content></ng-content>
+
+    @for (item of startActions; track item.id) {
+      <button type="button" class="btn" [class]="classFor(item)" [disabled]="item.disabled" (click)="action.emit(item.id)">
+        @if (item.icon) {
+          <app-icon [name]="item.icon" [size]="16"></app-icon>
+        }
+        {{ item.label }}
+      </button>
+    }
+  </div>
+
+  <div class="wizard-footer__group wizard-footer__group--end">
+    @for (item of endActions; track item.id) {
+      <button type="button" class="btn" [class]="classFor(item)" [disabled]="item.disabled" (click)="action.emit(item.id)">
+        @if (item.icon) {
+          <app-icon [name]="item.icon" [size]="16"></app-icon>
+        }
+        {{ item.label }}
+      </button>
+    }
+  </div>
+</div>

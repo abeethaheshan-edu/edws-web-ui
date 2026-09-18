@@ -1,0 +1,142 @@
+@use "sass:map";
+@use "index" as t;
+
+.card {
+  transition: box-shadow t.$transition, border-color t.$transition;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: t.$space-3;
+  border-bottom-color: t.color("outline-variant");
+}
+
+.card-title {
+  @include t.type("headline-sm");
+  margin-bottom: 0;
+}
+
+.card-subtitle { @include t.type("body"); }
+.card-body     { @include t.type("body"); }
+
+.card-footer {
+  @include t.type("body-sm");
+  background-color: transparent;
+  border-top-color: t.color("outline-variant");
+  color: t.color("on-surface-variant");
+}
+
+.card-eyebrow {
+  @include t.type("label-sm");
+  display: block;
+  margin-bottom: t.$space-1;
+  color: t.color("on-surface-variant");
+  text-transform: uppercase;
+}
+
+.card-elevated {
+  --bs-card-border-color: transparent;
+  box-shadow: t.$shadow-md;
+}
+
+.card-interactive {
+  cursor: pointer;
+
+  &:hover {
+    --bs-card-border-color: #{t.color("outline")};
+    box-shadow: t.$shadow-sm;
+  }
+  &:focus-visible {
+    outline: 2px solid t.color("primary-container");
+    outline-offset: 2px;
+  }
+}
+
+@each $level, $c in t.$severity {
+  .card-severity-#{$level} { border-left: 4px solid map.get($c, solid); }
+}
+
+.card-metric {
+  .card-metric-label {
+    @include t.type("label");
+    color: t.color("on-surface-variant");
+    text-transform: uppercase;
+  }
+  .card-metric-value {
+    @include t.type("headline-lg");
+    margin-top: t.$space-1;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.card-split {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  > * + * { border-top: t.$border-width solid t.color("outline-variant"); }
+
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr 1fr;
+
+    > * + * {
+      border-top: 0;
+      border-left: t.$border-width solid t.color("outline-variant");
+    }
+  }
+}
+
+.card-signature {
+  @include t.type("body");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  border: t.$border-width dashed t.color("outline");
+  border-radius: t.$radius;
+  color: t.color("on-surface-variant");
+}
+
+.card-media {
+  overflow: hidden;
+  border-radius: inherit;
+
+  > * { display: block; width: 100%; }
+}
+
+.chip {
+  @include t.type("label-sm");
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-1;
+  padding: 0.25rem 0.625rem;
+  border: t.$border-width solid transparent;
+  border-radius: t.$radius;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@each $level, $c in t.$severity {
+  .chip-severity-#{$level} {
+    @if $level >= 4 {
+      background-color: map.get($c, solid);
+      color: #ffffff;
+    } @else {
+      background-color: map.get($c, tint);
+      color: map.get($c, on-tint);
+    }
+  }
+}
+
+@each $name, $role in ("pending": "warning", "approved": "success", "rejected": "error", "draft": "secondary") {
+  .chip-#{$name} {
+    background-color: t.color("#{$role}-container");
+    color: t.color("on-#{$role}-container");
+  }
+}
+
+.chip-outline {
+  border-color: t.color("outline-variant");
+  color: t.color("on-surface-variant");
+}

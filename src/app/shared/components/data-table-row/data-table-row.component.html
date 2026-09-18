@@ -1,0 +1,9 @@
+<div
+  class="table-row"
+  [class.table-row--clickable]="clickable"
+  [class.table-row--active]="active"
+  [style.grid-template-columns]="gridTemplate"
+  (click)="onClick()"
+>
+  <ng-content></ng-content>
+</div>

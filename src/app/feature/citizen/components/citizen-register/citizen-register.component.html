@@ -1,0 +1,96 @@
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">Register Citizen</h1>
+      <p class="page__subtitle">Household registration for your GN division</p>
+    </div>
+  </header>
+
+  <form class="citizen-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h2 class="step__title">Personal Details</h2>
+
+    <div class="step__grid">
+      <div class="form-field">
+        <label class="form-label" for="fullName">Full Name</label>
+        <input id="fullName" class="form-control" formControlName="fullName" placeholder="e.g. Nimal Perera" />
+        <form-control-error [control]="form.controls.fullName" fieldName="Full name"></form-control-error>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="nic">NIC Number</label>
+        <input id="nic" class="form-control" formControlName="nic" placeholder="e.g. 199012345678" />
+        <form-control-error [control]="form.controls.nic" fieldName="NIC number"></form-control-error>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="phone">Telephone</label>
+        <input id="phone" class="form-control" formControlName="phone" placeholder="+94 7X XXX XXXX" />
+        <form-control-error [control]="form.controls.phone" fieldName="Telephone"></form-control-error>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="email">Email (optional)</label>
+        <input id="email" class="form-control" type="email" formControlName="email" placeholder="name@example.com" />
+        <form-control-error [control]="form.controls.email" fieldName="Email"></form-control-error>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="dateOfBirth">Date of Birth</label>
+        <input id="dateOfBirth" class="form-control" type="date" formControlName="dateOfBirth" />
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="gender">Gender</label>
+        <select id="gender" class="form-select" formControlName="gender">
+          <option value="">Select gender</option>
+          @for (option of genders; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-field step__span-2">
+        <div class="form-check">
+          <input id="householder" class="form-check-input" type="checkbox" formControlName="householder" />
+          <label class="form-check-label" for="householder">This person is the householder</label>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="step__title">Residence</h2>
+
+    <div class="step__grid">
+      <div class="form-field">
+        <label class="form-label" for="houseName">House Name</label>
+        <input id="houseName" class="form-control" formControlName="houseName" />
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="houseNo">House Number</label>
+        <input id="houseNo" class="form-control" formControlName="houseNo" />
+      </div>
+
+      <div class="form-field step__span-2">
+        <label class="form-label" for="streetAddress1">Street Address</label>
+        <input id="streetAddress1" class="form-control" formControlName="streetAddress1" />
+        <form-control-error [control]="form.controls.streetAddress1" fieldName="Street address"></form-control-error>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="city">City</label>
+        <input id="city" class="form-control" formControlName="city" />
+        <form-control-error [control]="form.controls.city" fieldName="City"></form-control-error>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="zipCode">Postal Code</label>
+        <input id="zipCode" class="form-control" formControlName="zipCode" inputmode="numeric" />
+        <form-control-error [control]="form.controls.zipCode" fieldName="Postal code"></form-control-error>
+      </div>
+    </div>
+
+    <div class="citizen-form__actions">
+      <button type="submit" class="btn btn-primary" [disabled]="submitting()">Register Citizen</button>
+    </div>
+  </form>
+</div>

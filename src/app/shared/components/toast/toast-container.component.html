@@ -1,0 +1,18 @@
+<div class="toast-stack" role="status" aria-live="polite">
+  @for (toast of toasts(); track toast.id) {
+    <div class="app-toast" [class]="'app-toast--' + toast.type">
+      <app-icon class="app-toast__icon" [name]="iconFor(toast)" [size]="20"></app-icon>
+
+      <div class="app-toast__content">
+        <p class="app-toast__title">{{ toast.title }}</p>
+        @if (toast.description) {
+          <p class="app-toast__text">{{ toast.description }}</p>
+        }
+      </div>
+
+      <button type="button" class="app-toast__close" aria-label="Dismiss" (click)="dismiss(toast)">
+        <app-icon name="close" [size]="16"></app-icon>
+      </button>
+    </div>
+  }
+</div>

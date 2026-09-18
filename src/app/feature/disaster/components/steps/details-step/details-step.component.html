@@ -1,0 +1,68 @@
+<section class="step" [formGroup]="form">
+  <h2 class="step__title">Basic Details</h2>
+
+  <div class="details-grid">
+    <div class="form-field">
+      <label class="form-label" for="title">Alert Title</label>
+      <input
+        id="title"
+        class="form-control"
+        formControlName="title"
+        placeholder="e.g., Immediate Flood Warning - Gin Ganga River"
+      />
+      <form-control-error [control]="form.controls.title" fieldName="Alert title"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="type">Alert Type</label>
+      <select id="type" class="form-select" formControlName="type">
+        <option value="">Select type</option>
+        @for (option of typeOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+      <form-control-error [control]="form.controls.type" fieldName="Alert type"></form-control-error>
+    </div>
+
+    <div class="form-field details-grid__span">
+      <span class="form-label d-block">Severity Level</span>
+      <div class="severity-group" role="radiogroup" aria-label="Severity level">
+        @for (option of severityOptions; track option.value) {
+          <button
+            type="button"
+            role="radio"
+            class="severity"
+            [class]="'severity--' + option.tone"
+            [class.severity--selected]="form.controls.severity.value === option.value"
+            [attr.aria-checked]="form.controls.severity.value === option.value"
+            (click)="selectSeverity(option.value)"
+          >
+            <span class="severity__dot" aria-hidden="true"></span>
+            {{ option.label }}
+          </button>
+        }
+      </div>
+      <form-control-error [control]="form.controls.severity" fieldName="Severity level"></form-control-error>
+    </div>
+
+    <div class="form-field details-grid__span">
+      <label class="form-label" for="description">Alert Description</label>
+      <textarea
+        id="description"
+        class="form-control"
+        rows="4"
+        formControlName="description"
+        placeholder="Provide detailed information about the current status, observed water levels, and necessary citizen actions..."
+      ></textarea>
+      <form-control-error [control]="form.controls.description" fieldName="Alert description"></form-control-error>
+    </div>
+
+    <div class="form-field details-grid__span">
+      <span class="form-label d-block">Supporting Evidence (Images/PDFs)</span>
+      <app-file-drop
+        [files]="form.controls.attachments.value"
+        (filesChange)="onAttachmentsChange($event)"
+      ></app-file-drop>
+    </div>
+  </div>
+</section>

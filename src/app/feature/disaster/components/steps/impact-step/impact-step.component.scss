@@ -1,0 +1,16 @@
+.estimate-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.625rem;
+  background-color: #eef3ff;
+  color: #274574;
+  font-size: 0.8125rem;
+}
+
+textarea.form-control {
+  resize: vertical;
+}

@@ -1,0 +1,9 @@
+<p class="message">{{ data.message }}</p>
+
+@if (data.details?.length) {
+  <ul class="message__details">
+    @for (detail of data.details; track detail) {
+      <li>{{ detail }}</li>
+    }
+  </ul>
+}

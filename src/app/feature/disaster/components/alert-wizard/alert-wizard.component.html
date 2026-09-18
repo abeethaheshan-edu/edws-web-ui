@@ -1,0 +1,23 @@
+<div class="page wizard">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">{{ title }}</h1>
+      <p class="page__subtitle">{{ subtitle }}</p>
+    </div>
+  </header>
+
+  <div class="wizard__body">
+    <ng-container *ngComponentOutlet="currentStep().component"></ng-container>
+  </div>
+</div>
+
+<footer class="wizard__bar">
+  <app-wizard-stepper
+    [steps]="steps"
+    [activeIndex]="stepIndex()"
+    [completedIndexes]="completedIndexes()"
+    (stepSelect)="goToStep($event)"
+  ></app-wizard-stepper>
+
+  <app-wizard-footer [actions]="actions()" (action)="onAction($event)"></app-wizard-footer>
+</footer>

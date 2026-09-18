@@ -1,0 +1,122 @@
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">User</h1>
+      <p class="page__subtitle">user management</p>
+    </div>
+
+    <button type="button" class="btn btn-primary add-official" (click)="openCreate()">
+      <app-icon name="user-plus" [size]="18"></app-icon> Add Official
+    </button>
+  </header>
+
+  <div class="filter-bar">
+    <div class="filter-bar__search">
+      <app-icon class="filter-bar__search-icon" name="search" [size]="16"></app-icon>
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search by name, email or ID"
+        [value]="filter().search"
+        (input)="updateFilter({ search: $any($event.target).value })"
+      />
+    </div>
+
+    <select
+      class="form-select"
+      [value]="filter().province"
+      (change)="updateFilter({ province: $any($event.target).value })"
+    >
+      <option value="">All Provinces</option>
+      @for (province of provinces; track province.value) {
+        <option [value]="province.value">{{ province.label }}</option>
+      }
+    </select>
+
+    <select
+      class="form-select"
+      [value]="filter().district"
+      (change)="updateFilter({ district: $any($event.target).value })"
+    >
+      <option value="">All Districts</option>
+      @for (district of districts; track district.value) {
+        <option [value]="district.value">{{ district.label }}</option>
+      }
+    </select>
+
+    <select class="form-select" [value]="filter().role" (change)="updateFilter({ role: $any($event.target).value })">
+      <option value="">All Roles</option>
+      @for (role of roles; track role) {
+        <option [value]="role">{{ roleLabels[role] }}</option>
+      }
+    </select>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [loading]="loading()"
+    [isEmpty]="!visibleUsers().length"
+    emptyTitle="No officials found"
+    emptyMessage="Adjust the search or filters to see more records."
+  >
+    @for (user of visibleUsers(); track user.id) {
+      <app-data-table-row [columns]="columns" [clickable]="true" (rowClick)="openView(user)">
+        <div class="cell official">
+          <app-avatar [name]="user.fullName" [size]="40"></app-avatar>
+          <div class="official__text">
+            <span class="official__name">{{ user.fullName }}</span>
+            <span class="official__email">{{ user.email }}</span>
+          </div>
+        </div>
+
+        <div class="cell">
+          <span class="tag">
+            <app-icon name="shield" [size]="14"></app-icon>
+            {{ scopeLabels[user.scope] }}
+          </span>
+        </div>
+
+        <div class="cell cell--muted area">
+          <app-icon name="map-pin" [size]="15"></app-icon>
+          {{ areaOf(user) }}
+        </div>
+
+        <div class="cell">
+          <app-status-badge [label]="statusLabels[user.status]" [tone]="statusTones[user.status]"></app-status-badge>
+        </div>
+
+        <div class="cell cell--muted">
+          <div>{{ user.lastActiveAt }}</div>
+          <div class="activity__ip">{{ user.lastKnownIp }}</div>
+        </div>
+
+        <div class="cell cell--end" ngbDropdown container="body" placement="bottom-end" (click)="$event.stopPropagation()">
+          <button type="button" class="row-menu" ngbDropdownToggle aria-label="Row actions">
+            <app-icon name="more-vertical" [size]="18"></app-icon>
+          </button>
+
+          <div ngbDropdownMenu class="row-menu__list">
+            <button type="button" ngbDropdownItem (click)="openView(user)">
+              <app-icon name="eye" [size]="16"></app-icon> View details
+            </button>
+            <button type="button" ngbDropdownItem (click)="openEdit(user)">
+              <app-icon name="edit" [size]="16"></app-icon> Edit official
+            </button>
+            @if (isAdmin(user)) {
+              <button type="button" ngbDropdownItem (click)="openAssignTeam(user)">
+                <app-icon name="users" [size]="16"></app-icon> Assign reviewers &amp; drawers
+              </button>
+            }
+            <button type="button" ngbDropdownItem class="text-danger" (click)="confirmDelete(user)">
+              <app-icon name="trash" [size]="16"></app-icon> Remove access
+            </button>
+          </div>
+        </div>
+      </app-data-table-row>
+    }
+  </app-data-table>
+
+  <div class="mt-4">
+    <app-pagination [state]="pageState()" (pageChange)="onPageChange($event)"></app-pagination>
+  </div>
+</div>

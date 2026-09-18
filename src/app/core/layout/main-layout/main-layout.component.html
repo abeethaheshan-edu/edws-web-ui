@@ -1,0 +1,13 @@
+<div class="app-shell" [class.app-shell--nav-open]="sidebarOpen()">
+  <app-side-nav class="app-shell__sidebar" (closeNav)="closeSidebar()"></app-side-nav>
+
+  <div class="app-shell__backdrop" (click)="closeSidebar()"></div>
+
+  <div class="app-shell__main">
+    <app-main-nav (menuToggle)="toggleSidebar()"></app-main-nav>
+
+    <main class="app-shell__content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

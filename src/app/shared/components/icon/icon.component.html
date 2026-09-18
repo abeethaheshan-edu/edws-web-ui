@@ -1,0 +1,16 @@
+<svg
+  class="app-icon"
+  [attr.width]="size"
+  [attr.height]="size"
+  viewBox="0 0 24 24"
+  [attr.fill]="filled ? 'currentColor' : 'none'"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  @for (path of paths; track $index) {
+    <path [attr.d]="path"></path>
+  }
+</svg>

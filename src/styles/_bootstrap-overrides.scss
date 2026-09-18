@@ -1,0 +1,115 @@
+@use "index" as t;
+
+$enable-shadows:   false;
+$enable-dark-mode: true;
+
+$primary:   t.color("primary");
+$secondary: t.color("secondary");
+$success:   t.color("success");
+$info:      t.color("info");
+$warning:   t.color("warning");
+$danger:    t.color("error");
+$light:     t.color("surface-container-low");
+$dark:      t.color("inverse-surface");
+
+$body-bg:              t.color("background");
+$body-color:           t.color("on-surface");
+$body-secondary-color: t.color("on-surface-variant");
+$body-tertiary-bg:     t.color("surface-container-low");
+$border-color:         t.color("outline-variant");
+$border-width:         t.$border-width;
+
+$link-color:            t.color("primary");
+$link-hover-color:      t.color("primary-container");
+$link-decoration:       none;
+$link-hover-decoration: underline;
+
+$spacer: t.$space-3;
+$spacers: (
+  0: 0, 1: t.$space-1, 2: t.$space-2, 3: t.$space-3,
+  4: t.$space-4, 5: t.$space-5, 6: t.$space-6,
+);
+$grid-gutter-width: t.$gutter;
+
+$border-radius-sm: t.$radius-sm;
+$border-radius:    t.$radius-md;
+$border-radius-lg: t.$radius-lg;
+
+$box-shadow-sm: t.$shadow-sm;
+$box-shadow:    t.$shadow-md;
+$box-shadow-lg: t.$shadow-lg;
+
+$font-family-sans-serif: t.$font-sans;
+$font-family-monospace:  t.$font-mono;
+$font-size-base:         t.$fs-base;
+$font-weight-medium:     t.$fw-medium;
+$font-weight-semibold:   t.$fw-semibold;
+
+$h1-font-size: t.$fs-display;
+$h2-font-size: t.$fs-h1;
+$h3-font-size: t.$fs-h2;
+$h4-font-size: t.$fs-h3;
+$h5-font-size: t.$fs-lg;
+$h6-font-size: t.$fs-base;
+
+$headings-font-weight: t.$fw-semibold;
+$headings-line-height: 1.25;
+$headings-color:       t.color("on-surface");
+$small-font-size:      t.$fs-xs;
+
+$input-btn-padding-y: 0.5rem;
+$input-btn-padding-x: 0.875rem;
+$input-btn-focus-width: 2px;
+$focus-ring-color: rgba(30, 94, 255, 0.2);
+
+$btn-font-weight:   t.$fw-medium;
+$btn-border-radius: t.$radius-md;
+
+$input-bg:                t.color("surface-container-lowest");
+$input-border-color:      t.color("outline-variant");
+$input-border-radius:     t.$radius-md;
+$input-focus-border-color: t.color("primary-container");
+$input-padding-y:         0.625rem;
+$input-padding-x:         0.75rem;
+$form-label-font-size:    t.$fs-sm;
+$form-label-font-weight:  t.$fw-medium;
+$form-label-color:        t.color("on-surface-variant");
+
+$card-spacer-y:       t.$space-4;
+$card-spacer-x:       t.$space-4;
+$card-title-spacer-y: t.$space-2;
+$card-bg:             t.color("surface-container-lowest");
+$card-color:          t.color("on-surface");
+$card-border-color:   t.color("outline-variant");
+$card-border-radius:  t.$radius-md;
+$card-cap-bg:         transparent;
+$card-cap-padding-y:  t.$space-3;
+$card-cap-padding-x:  t.$space-4;
+$card-subtitle-color: t.color("on-surface-variant");
+
+$badge-font-size:     t.$fs-xs;
+$badge-font-weight:   t.$fw-semibold;
+$badge-border-radius: t.$radius;
+
+$dropdown-bg:            t.color("surface-container-lowest");
+$dropdown-border-color:  t.color("outline-variant");
+$dropdown-link-hover-bg: t.color("surface-container-low");
+
+$modal-content-bg:           t.color("surface-container-lowest");
+$modal-content-border-color: t.color("outline-variant");
+
+$table-border-color:   t.color("outline-variant");
+$table-striped-bg:     t.color("surface-container-low");
+$table-hover-bg:       t.color("surface-container-low");
+$table-cell-padding-y: 0.75rem;
+$table-cell-padding-x: 1rem;
+
+$nav-link-color:       t.color("on-surface-variant");
+$nav-link-hover-color: t.color("primary");
+$nav-link-font-weight: t.$fw-medium;
+
+$breadcrumb-font-size:    t.$fs-sm;
+$breadcrumb-active-color: t.color("on-surface");
+
+$tooltip-bg:    t.color("inverse-surface");
+$tooltip-color: t.color("inverse-on-surface");

@@ -1,0 +1,142 @@
+<app-side-panel
+  [title]="title"
+  [subtitle]="subtitle"
+  [submitText]="mode === 'edit' ? 'Save Changes' : 'Send Request'"
+  [showFooter]="!isReadOnly"
+  (dismissed)="offcanvas.dismiss()"
+  (submitted)="onSubmit()"
+>
+  <form [formGroup]="form" novalidate>
+    <div class="form-field">
+      <label class="form-label" for="scope">Administrative Scope</label>
+      <select id="scope" class="form-select" formControlName="scope">
+        <option value="">Select Scope</option>
+        @for (option of scopeOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+      <form-control-error [control]="form.controls.scope" fieldName="Administrative scope"></form-control-error>
+    </div>
+
+    <h3 class="form-section">
+      <app-icon name="users" [size]="16"></app-icon> Identity &amp; Access
+    </h3>
+
+    <div class="form-field">
+      <label class="form-label" for="fullName">Full Name</label>
+      <input id="fullName" class="form-control" formControlName="fullName" placeholder="e.g. Priyantha Kumara" />
+      <form-control-error [control]="form.controls.fullName" fieldName="Full name"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="email">Email Address</label>
+      <input id="email" class="form-control" type="email" formControlName="email" placeholder="p.kumara@dmc.gov.lk" />
+      <form-control-error [control]="form.controls.email" fieldName="Email address"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="telephone">Telephone</label>
+      <input id="telephone" class="form-control" formControlName="telephone" placeholder="+94 7X XXX XXXX" />
+      <form-control-error [control]="form.controls.telephone" fieldName="Telephone"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="department">Department</label>
+      <select id="department" class="form-select" formControlName="department">
+        <option value="">Select Department</option>
+        @for (option of departments; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+      <form-control-error [control]="form.controls.department" fieldName="Department"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <span class="form-label d-block">Access Role</span>
+      @for (option of roleOptions; track option.value) {
+        <label
+          class="role-option"
+          [class.role-option--selected]="form.controls.role.value === option.value"
+          (click)="selectRole(option.value)"
+        >
+          <input
+            type="radio"
+            class="form-check-input"
+            [checked]="form.controls.role.value === option.value"
+            [disabled]="isReadOnly"
+            [attr.name]="'access-role'"
+          />
+          <span>
+            <span class="role-option__label d-block">{{ option.label }}</span>
+            <span class="role-option__description">{{ option.description }}</span>
+          </span>
+        </label>
+      }
+      <form-control-error [control]="form.controls.role" fieldName="Access role"></form-control-error>
+    </div>
+
+    @if (needsReportingAdmin) {
+      <div class="form-field">
+        <label class="form-label" for="reportsTo">Reports To (Admin)</label>
+        <select id="reportsTo" class="form-select" formControlName="reportsToAdminId">
+          <option value="">Select admin</option>
+          @for (admin of admins; track admin.id) {
+            <option [value]="admin.id">{{ admin.fullName }} — {{ admin.id }}</option>
+          }
+        </select>
+        <form-control-error
+          [control]="form.controls.reportsToAdminId"
+          fieldName="Reporting admin"
+        ></form-control-error>
+      </div>
+    }
+
+    @if (scopeFields.length) {
+      <h3 class="form-section">
+        <app-icon name="map-pin" [size]="16"></app-icon> Area of Responsibility
+      </h3>
+
+      <div [formGroup]="scopeForm">
+        @for (field of scopeFields; track field.key) {
+          <div class="form-field">
+            <label class="form-label" [attr.for]="field.key">{{ field.label }}</label>
+
+            @if (field.type === 'select') {
+              <select class="form-select" [id]="field.key" [formControlName]="field.key">
+                <option value="">{{ field.placeholder }}</option>
+                @for (option of field.options; track option.value) {
+                  <option [value]="option.value">{{ option.label }}</option>
+                }
+              </select>
+            } @else {
+              <input
+                class="form-control"
+                [id]="field.key"
+                [formControlName]="field.key"
+                [placeholder]="field.placeholder"
+                [attr.inputmode]="field.type === 'number' ? 'numeric' : null"
+                [attr.maxlength]="field.length || null"
+              />
+            }
+
+            <form-control-error [control]="scopeControl(field.key)" [fieldName]="field.label"></form-control-error>
+          </div>
+        }
+      </div>
+    }
+
+    <h3 class="form-section">
+      <app-icon name="archive" [size]="16"></app-icon> Office Address
+    </h3>
+
+    <div class="form-field">
+      <textarea
+        class="form-control"
+        rows="3"
+        formControlName="officeAddress"
+        placeholder="Enter workplace address..."
+      ></textarea>
+      <form-control-error [control]="form.controls.officeAddress" fieldName="Office address"></form-control-error>
+    </div>
+  </form>
+</app-side-panel>

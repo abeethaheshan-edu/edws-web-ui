@@ -1,20 +1,24 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import { AppRoutingModule } from './app-routing-module';
+import { apiErrorInterceptor } from './core/interceptors/api-error.interceptor';
+import { authTokenInterceptor } from './core/interceptors/auth-token.interceptor';
+import { refreshTokenInterceptor } from './core/interceptors/refresh-token.interceptor';
+import { LayoutModule } from './core/layout/layout-module';
+import { SharedModule } from './shared/shared-module';
 
 @NgModule({
-  declarations: [
-    App
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  declarations: [App],
+  imports: [BrowserModule, AppRoutingModule, SharedModule, LayoutModule],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    provideHttpClient(
+      withInterceptors([authTokenInterceptor, refreshTokenInterceptor, apiErrorInterceptor]),
+    ),
   ],
-  bootstrap: [App]
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}

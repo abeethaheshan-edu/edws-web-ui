@@ -1,0 +1,53 @@
+<section class="step">
+  <header class="step__header">
+    <h2 class="step__title">Review &amp; Verify</h2>
+    <p class="step__subtitle">Check every section before the alert goes for approval.</p>
+  </header>
+
+  <div class="review-grid">
+    <article class="review-card">
+      <h3 class="review-card__title"><app-icon name="file-text" [size]="16"></app-icon> Alert Details</h3>
+      <dl class="review-list">
+        @for (row of detailRows(); track row.label) {
+          <div class="review-list__row">
+            <dt>{{ row.label }}</dt>
+            <dd>{{ row.value }}</dd>
+          </div>
+        }
+      </dl>
+      <p class="review-card__text">{{ description() || 'No description provided.' }}</p>
+    </article>
+
+    <article class="review-card">
+      <h3 class="review-card__title"><app-icon name="map-pin" [size]="16"></app-icon> Affected Area</h3>
+      <dl class="review-list">
+        @for (row of areaRows(); track row.label) {
+          <div class="review-list__row">
+            <dt>{{ row.label }}</dt>
+            <dd>{{ row.value }}</dd>
+          </div>
+        }
+      </dl>
+      <p
+        class="review-card__state"
+        [class.review-card__state--valid]="summary().boundaryValidated"
+      >
+        <app-icon [name]="summary().boundaryValidated ? 'shield-check' : 'alert-triangle'" [size]="16"></app-icon>
+        {{ summary().boundaryValidated ? 'Boundary validated' : 'Boundary still missing' }}
+      </p>
+    </article>
+
+    <article class="review-card">
+      <h3 class="review-card__title"><app-icon name="clipboard" [size]="16"></app-icon> Impact Assessment</h3>
+      <dl class="review-list">
+        @for (row of impactRows(); track row.label) {
+          <div class="review-list__row">
+            <dt>{{ row.label }}</dt>
+            <dd>{{ row.value }}</dd>
+          </div>
+        }
+      </dl>
+      <p class="review-card__text">{{ notes() || 'No response notes added.' }}</p>
+    </article>
+  </div>
+</section>
