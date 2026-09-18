@@ -9,6 +9,9 @@ export class AuthenticatedUser {
   private _gnDivisionId: string;
   private _mustChangePassword: boolean;
   private _houseHolder: boolean;
+  private _gnDivisionName: string;
+  private _districtName: string;
+  private _provinceName: string;
 
   constructor(
     id = '',
@@ -21,6 +24,9 @@ export class AuthenticatedUser {
     gnDivisionId = '',
     mustChangePassword = false,
     houseHolder = false,
+    gnDivisionName = '',
+    districtName = '',
+    provinceName = '',
   ) {
     this._id = id;
     this._email = email;
@@ -32,6 +38,9 @@ export class AuthenticatedUser {
     this._gnDivisionId = gnDivisionId;
     this._mustChangePassword = mustChangePassword;
     this._houseHolder = houseHolder;
+    this._gnDivisionName = gnDivisionName;
+    this._districtName = districtName;
+    this._provinceName = provinceName;
   }
 
   static fromJson(json: Record<string, unknown>): AuthenticatedUser {
@@ -46,6 +55,9 @@ export class AuthenticatedUser {
       (json['gnDivisionId'] as string) ?? '',
       Boolean(json['mustChangePassword']),
       Boolean(json['houseHolder']),
+      (json['gnDivisionName'] as string) ?? '',
+      (json['districtName'] as string) ?? '',
+      (json['provinceName'] as string) ?? '',
     );
   }
 
@@ -87,6 +99,36 @@ export class AuthenticatedUser {
 
   get houseHolder(): boolean {
     return this._houseHolder;
+  }
+
+  get gnDivisionName(): string {
+    return this._gnDivisionName;
+  }
+
+  get districtName(): string {
+    return this._districtName;
+  }
+
+  get provinceName(): string {
+    return this._provinceName;
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      id: this._id,
+      email: this._email,
+      fullName: this._fullName,
+      role: this._role,
+      status: this._status,
+      administrativeScope: this._administrativeScope,
+      permissions: this._permissions,
+      gnDivisionId: this._gnDivisionId,
+      mustChangePassword: this._mustChangePassword,
+      houseHolder: this._houseHolder,
+      gnDivisionName: this._gnDivisionName,
+      districtName: this._districtName,
+      provinceName: this._provinceName,
+    };
   }
 
   get initials(): string {

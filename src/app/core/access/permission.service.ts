@@ -1,21 +1,23 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { Net } from '../net/net';
 import { NetworkService } from '../net/network.service';
 import { AccessAction, AccessPolicy } from './access-policy.model';
+
+const POLICY_KEY = 'edws.auth.policy';
 
 @Injectable({ providedIn: 'root' })
 export class PermissionService {
   private readonly api = inject(ApiService);
   private readonly network = inject(NetworkService);
 
-  private readonly current = signal<AccessPolicy | null>(null);
-  private allowed = new Map<string, Set<string>>();
+  private readonly current = signal<AccessPolicy | null>(this.read());
+  private allowed = this.index(this.current());
 
   readonly policy = this.current.asReadonly();
 
-  load(): Observable<AccessPolicy | null> {
+  load(): Observable<AccessPolicy> {
     const net = Net.get();
     net.url = this.api.getApiUrl('myAccessPolicy');
 
@@ -23,7 +25,7 @@ export class PermissionService {
   }
 
   ensureLoaded(): Observable<AccessPolicy | null> {
-    return this.current() ? of(this.current()) : this.load().pipe(map((policy) => policy));
+    return this.current() ? of(this.current()) : this.load();
   }
 
   can(element: string, action: AccessAction = 'VIEW'): boolean {
@@ -41,12 +43,30 @@ export class PermissionService {
   clear(): void {
     this.current.set(null);
     this.allowed = new Map();
+    localStorage.removeItem(POLICY_KEY);
   }
 
   private apply(policy: AccessPolicy): void {
     this.current.set(policy);
-    this.allowed = new Map(
-      (policy?.elements ?? []).map((entry) => [entry.element, new Set<string>(entry.actions ?? [])]),
-    );
+    this.allowed = this.index(policy);
+
+    try {
+      localStorage.setItem(POLICY_KEY, JSON.stringify(policy));
+    } catch {
+      return;
+    }
+  }
+
+  private index(policy: AccessPolicy | null): Map<string, Set<string>> {
+    return new Map((policy?.elements ?? []).map((entry) => [entry.element, new Set<string>(entry.actions ?? [])]));
+  }
+
+  private read(): AccessPolicy | null {
+    try {
+      const raw = localStorage.getItem(POLICY_KEY);
+      return raw ? (JSON.parse(raw) as AccessPolicy) : null;
+    } catch {
+      return null;
+    }
   }
 }

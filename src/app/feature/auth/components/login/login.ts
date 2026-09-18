@@ -1,6 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { landingRoute } from '../../../../core/access/landing-route';
+import { PermissionService } from '../../../../core/access/permission.service';
 import { AuthApiService } from '../../../../core/auth/auth-api.service';
 import { ApiError } from '../../../../core/net/api-error.model';
 import { LoginPayload } from '../../../../shared/models/auth.model';
@@ -18,6 +20,7 @@ export class Login {
   private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
   private readonly authApi = inject(AuthApiService);
+  private readonly permissions = inject(PermissionService);
 
   protected readonly showPassword = signal(false);
   protected readonly submitting = signal(false);
@@ -46,16 +49,25 @@ export class Login {
 
     this.authApi.login(payload.email, payload.password).subscribe({
       next: (user) => {
-        this.submitting.set(false);
-
         if (user.mustChangePassword) {
+          this.submitting.set(false);
           this.toast.info('Temporary password detected', 'Set a permanent password to continue.');
           void this.router.navigate(['/auth/set-password'], { queryParams: { email: user.email } });
           return;
         }
 
-        this.toast.success('Signed in', `Welcome back, ${user.fullName}.`);
-        void this.router.navigateByUrl('/dashboard');
+        this.submitting.set(false);
+
+        this.permissions.load().subscribe({
+          next: () => {
+            this.toast.success('Signed in', `Welcome back, ${user.fullName}.`);
+            void this.router.navigateByUrl(landingRoute(this.permissions));
+          },
+          error: (policyError: ApiError) => {
+            this.toast.error('Sign in failed', policyError?.message ?? 'Could not load your access rights.');
+            this.authApi.logout();
+          },
+        });
       },
       error: (error: ApiError) => {
         this.submitting.set(false);

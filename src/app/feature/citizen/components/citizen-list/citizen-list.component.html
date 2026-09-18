@@ -1,0 +1,57 @@
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">Citizen Registry</h1>
+      <p class="page__subtitle">Households registered in your GN division</p>
+    </div>
+
+    <button type="button" class="btn btn-primary add-citizen" *hasAccess="'CITIZEN_REGISTRY'; action: 'CREATE'" (click)="openRegister()">
+      <app-icon name="user-plus" [size]="18"></app-icon> Add Member
+    </button>
+  </header>
+
+  <div class="filter-bar">
+    <div class="filter-bar__search">
+      <app-icon class="filter-bar__search-icon" name="search" [size]="16"></app-icon>
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search by name, NIC or email"
+        [value]="search()"
+        (input)="onSearch($any($event.target).value)"
+      />
+    </div>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [showHeader]="true"
+    [loading]="loading()"
+    [isEmpty]="!items().length"
+    emptyTitle="No citizens registered yet"
+    emptyMessage="Use Add Member to register the first household."
+  >
+    @for (citizen of items(); track citizen.id) {
+      <app-data-table-row [columns]="columns">
+        <div class="cell citizen">
+          <app-avatar [name]="citizen.fullName" [size]="40"></app-avatar>
+          <div class="citizen__text">
+            <span class="citizen__name">{{ citizen.fullName }}</span>
+            <span class="citizen__email">{{ citizen.email }}</span>
+          </div>
+        </div>
+
+        <div class="cell cell--muted">{{ citizen.nic }}</div>
+        <div class="cell cell--muted">{{ citizen.phone }}</div>
+        <div class="cell cell--muted">{{ citizen.city || '-' }}</div>
+        <div class="cell cell--muted">
+          {{ citizen.memberCount }} member(s) · {{ citizen.propertyCount }} property(s)
+        </div>
+      </app-data-table-row>
+    }
+  </app-data-table>
+
+  <div class="mt-4">
+    <app-pagination [state]="pageState()" (pageChange)="onPageChange($event)"></app-pagination>
+  </div>
+</div>

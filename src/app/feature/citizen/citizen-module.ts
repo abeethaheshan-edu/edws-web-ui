@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared-module';
-import { CitizenRegisterComponent } from './components/citizen-register/citizen-register.component';
+import { CitizenFormPanelComponent } from './components/citizen-form-panel/citizen-form-panel.component';
+import { CitizenListComponent } from './components/citizen-list/citizen-list.component';
 import { CitizenRoutingModule } from './citizen-routing-module';
 
 @NgModule({
-  declarations: [CitizenRegisterComponent],
+  declarations: [CitizenListComponent, CitizenFormPanelComponent],
   imports: [SharedModule, CitizenRoutingModule],
 })
 export class CitizenModule {}

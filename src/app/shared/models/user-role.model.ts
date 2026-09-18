@@ -3,6 +3,7 @@ export enum UserRole {
   Admin = 'ADMIN',
   Reviewer = 'REVIEWER',
   Drawer = 'DRAWER',
+  GnOfficer='GN_OFFICER'
 }
 
 export enum AdministrativeScope {
@@ -28,6 +29,7 @@ export const ACCESS_ROLE_OPTIONS: SelectOption<UserRole>[] = [
   { value: UserRole.Admin, label: 'Admin', description: 'Manage users and settings' },
   { value: UserRole.Reviewer, label: 'Reviewer', description: 'Verify and validate risk data' },
   { value: UserRole.Drawer, label: 'Drawer', description: 'Create polygon and draw the area of disaster' },
+  { value: UserRole.GnOfficer, label: 'Gn Officer', description: 'Grama Niladari' },
 ];
 
 export const USER_ROLE_LABELS: Record<UserRole, string> = {
@@ -35,6 +37,7 @@ export const USER_ROLE_LABELS: Record<UserRole, string> = {
   [UserRole.Admin]: 'Admin',
   [UserRole.Reviewer]: 'Reviewer',
   [UserRole.Drawer]: 'Drawer',
+  [UserRole.GnOfficer]: 'Gn Officer',
 };
 
 export const ADMINISTRATIVE_SCOPE_OPTIONS: SelectOption<AdministrativeScope>[] = [

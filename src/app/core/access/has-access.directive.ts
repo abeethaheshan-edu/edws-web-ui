@@ -19,7 +19,7 @@ export class HasAccessDirective {
   private readonly container = inject(ViewContainerRef);
 
   private elements: string[] = [];
-  private action: AccessAction = 'VIEW';
+  private requiredAction: AccessAction = 'VIEW';
   private rendered = false;
 
   constructor() {
@@ -34,13 +34,13 @@ export class HasAccessDirective {
     this.update();
   }
 
-  @Input() set hasAccessAction(value: AccessAction) {
-    this.action = value;
+  @Input('hasAccessAction') set action(value: AccessAction) {
+    this.requiredAction = value;
     this.update();
   }
 
   private update(): void {
-    const granted = this.elements.length ? this.permissions.canAny(this.elements, this.action) : true;
+    const granted = this.elements.length ? this.permissions.canAny(this.elements, this.requiredAction) : true;
 
     if (granted && !this.rendered) {
       this.container.createEmbeddedView(this.template);

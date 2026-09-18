@@ -33,7 +33,7 @@ const routes: CustomRoutes = [
       {
         path: 'citizens',
         canActivate: [accessGuard],
-        data: { accessControlElements: [ACCESS_ELEMENTS.citizenRegistry], actions: ['CREATE'] },
+        data: { accessControlElements: [ACCESS_ELEMENTS.navCitizenRegistry], actions: ['VIEW'] },
         loadChildren: () => import('./feature/citizen/citizen-module').then((m) => m.CitizenModule),
       },
       {

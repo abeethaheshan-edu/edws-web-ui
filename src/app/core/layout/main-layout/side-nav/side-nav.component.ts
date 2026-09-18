@@ -26,7 +26,7 @@ export class SideNavComponent {
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard', element: ACCESS_ELEMENTS.navDashboard },
     { label: 'Disaster Alerts', icon: 'alert-triangle', route: '/disasters', element: ACCESS_ELEMENTS.navDisasterAlerts },
     { label: 'User Management', icon: 'users', route: '/users', element: ACCESS_ELEMENTS.navUserManagement },
-    { label: 'Citizen Registry', icon: 'user-plus', route: '/citizens', element: ACCESS_ELEMENTS.citizenRegistry },
+    { label: 'Citizen Registry', icon: 'user-plus', route: '/citizens', element: ACCESS_ELEMENTS.navCitizenRegistry },
     { label: 'Document Archive', icon: 'archive', route: '/documents', element: ACCESS_ELEMENTS.navDocumentArchive },
     { label: 'System Settings', icon: 'gear', route: '/settings', element: ACCESS_ELEMENTS.navSystemSettings },
   ];

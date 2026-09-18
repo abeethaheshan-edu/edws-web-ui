@@ -1,0 +1,55 @@
+.repeat-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #eceef6;
+  border-radius: 0.625rem;
+  background-color: #fbfcfe;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  &__title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #0b1c30;
+  }
+
+  &__remove {
+    padding: 0.25rem;
+    border: 0;
+    border-radius: 0.375rem;
+    background: none;
+    color: #ba1a1a;
+
+    &:hover {
+      background-color: #fdeaea;
+    }
+  }
+}
+
+.coordinates {
+  margin: 0.5rem 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: #0f7a3d;
+}
+
+.members-empty {
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border: 1px dashed #dfe3ee;
+  border-radius: 0.625rem;
+  color: #6b7280;
+  font-size: 0.8125rem;
+}
+
+.btn.w-100 {
+  display: inline-flex;
+  gap: 0.375rem;
+  align-items: center;
+  justify-content: center;
+}

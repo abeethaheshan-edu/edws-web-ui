@@ -8,6 +8,7 @@ import { AuthToken } from './auth-token.model';
 import { AuthenticatedUser } from './authenticated-user.model';
 import { AuthSessionService } from './auth-session.service';
 import { TokenStorageService } from './token-storage.service';
+import { PermissionService } from '../access/permission.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiService {
@@ -15,6 +16,7 @@ export class AuthApiService {
   private readonly network = inject(NetworkService);
   private readonly storage = inject(TokenStorageService);
   private readonly session = inject(AuthSessionService);
+  private readonly permissions = inject(PermissionService);
 
   login(email: string, password: string): Observable<AuthenticatedUser> {
     const net = Net.post();
@@ -25,6 +27,7 @@ export class AuthApiService {
     return this.network.unwrapFull<Record<string, unknown>>(net).pipe(
       map((response) => {
         this.storage.save(AuthToken.fromHeaders(response.headers));
+        this.permissions.clear();
         const user = AuthenticatedUser.fromJson(response.body?.data ?? {});
         this.session.setUser(user);
         if (user.mustChangePassword) {
@@ -93,5 +96,6 @@ export class AuthApiService {
   logout(): void {
     this.storage.clear();
     this.session.clear();
+    this.permissions.clear();
   }
 }

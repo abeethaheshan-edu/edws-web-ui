@@ -16,7 +16,7 @@ import { SharedModule } from './shared/shared-module';
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(
-      withInterceptors([authTokenInterceptor, refreshTokenInterceptor, apiErrorInterceptor]),
+      withInterceptors([apiErrorInterceptor, authTokenInterceptor, refreshTokenInterceptor]),
     ),
   ],
   bootstrap: [App],

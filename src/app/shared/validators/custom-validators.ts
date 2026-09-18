@@ -3,7 +3,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const DIGITS_ONLY = /^[0-9]+$/;
 const LETTERS_AND_SPACES = /^[a-zA-Z\u0D80-\u0DFF\u0B80-\u0BFF\s.'-]+$/;
-const PHONE_PATTERN = /^(?:\+94|0)[1-9][0-9]{8}$/;
+const PHONE_PATTERN = /^(?:0[1-9][0-9]{8}|\+94[1-9][0-9]{8})$/;
 
 function isBlank(value: unknown): boolean {
   return value === null || value === undefined || String(value).trim() === '';

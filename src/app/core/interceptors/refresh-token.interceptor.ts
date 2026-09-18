@@ -3,6 +3,8 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
 import { AuthApiService } from '../auth/auth-api.service';
+import { AuthSessionService } from '../auth/auth-session.service';
+import { PermissionService } from '../access/permission.service';
 import { TokenStorageService } from '../auth/token-storage.service';
 import { SKIP_AUTH } from '../net/net-context';
 import { withAuthHeaders } from './auth-token.interceptor';
@@ -17,6 +19,8 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
   const storage = inject(TokenStorageService);
   const authApi = inject(AuthApiService);
   const router = inject(Router);
+  const session = inject(AuthSessionService);
+  const permissions = inject(PermissionService);
 
   return next(request).pipe(
     catchError((error: unknown) => {
@@ -47,6 +51,8 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
         catchError((refreshError: unknown) => {
           refreshing = false;
           storage.clear();
+          session.clear();
+          permissions.clear();
           void router.navigateByUrl('/auth/login');
           return throwError(() => refreshError);
         }),

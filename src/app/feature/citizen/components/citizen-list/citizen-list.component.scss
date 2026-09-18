@@ -1,0 +1,32 @@
+.add-citizen {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.7rem 1.25rem;
+  font-weight: 600;
+}
+
+.citizen {
+  display: flex;
+  gap: 0.875rem;
+  align-items: center;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0b1c30;
+  }
+
+  &__email {
+    font-size: 0.75rem;
+    color: #6b7280;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

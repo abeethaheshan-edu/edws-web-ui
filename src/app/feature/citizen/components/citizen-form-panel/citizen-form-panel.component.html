@@ -1,0 +1,210 @@
+<app-side-panel
+  title="Register Citizen"
+  subtitle="Household registration for your GN division"
+  submitText="Register"
+  (dismissed)="offcanvas.dismiss()"
+  (submitted)="onSubmit()"
+>
+  <form [formGroup]="form" novalidate>
+    <h3 class="form-section"><app-icon name="shield-check" [size]="16"></app-icon> Officer &amp; Division</h3>
+
+    <div class="form-field">
+      <label class="form-label" for="gnDivision">GN Division</label>
+      <input id="gnDivision" class="form-control" formControlName="gnDivision" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="gnOfficerName">GN Officer</label>
+      <input id="gnOfficerName" class="form-control" formControlName="gnOfficerName" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="province">Province</label>
+      <input id="province" class="form-control" formControlName="province" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="district">District</label>
+      <input id="district" class="form-control" formControlName="district" />
+    </div>
+
+    <h3 class="form-section"><app-icon name="users" [size]="16"></app-icon> Householder</h3>
+
+    <div class="form-field">
+      <label class="form-label" for="fullName">Full Name</label>
+      <input id="fullName" class="form-control" formControlName="fullName" placeholder="e.g. Nimal Perera" />
+      <form-control-error [control]="form.controls.fullName" fieldName="Full name"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="nic">NIC</label>
+      <input id="nic" class="form-control" formControlName="nic" placeholder="e.g. 199012345678" />
+      <form-control-error [control]="form.controls.nic" fieldName="NIC"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="phone">Primary Telephone</label>
+      <input id="phone" class="form-control" formControlName="phone" placeholder="+94 7X XXX XXXX" />
+      <form-control-error [control]="form.controls.phone" fieldName="Primary telephone"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="secondaryPhone">Secondary Telephone</label>
+      <input id="secondaryPhone" class="form-control" formControlName="secondaryPhone" placeholder="Optional" />
+      <form-control-error [control]="form.controls.secondaryPhone" fieldName="Secondary telephone"></form-control-error>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="email">Email Address</label>
+      <input id="email" class="form-control" type="email" formControlName="email" placeholder="name@example.com" />
+      <form-control-error [control]="form.controls.email" fieldName="Email address"></form-control-error>
+    </div>
+
+    <h3 class="form-section"><app-icon name="map-pin" [size]="16"></app-icon> Property &amp; Location</h3>
+
+    <div formArrayName="properties">
+      @for (property of properties.controls; track $index) {
+        <div class="repeat-card" [formGroupName]="$index">
+          <header class="repeat-card__header">
+            <span class="repeat-card__title">{{ $index === 0 ? 'Primary property' : 'Property ' + ($index + 1) }}</span>
+            @if ($index > 0) {
+              <button type="button" class="repeat-card__remove" (click)="removeProperty($index)">
+                <app-icon name="trash" [size]="16"></app-icon>
+              </button>
+            }
+          </header>
+
+          <div class="form-field">
+            <label class="form-label">House No</label>
+            <input class="form-control" formControlName="houseNo" />
+            <form-control-error [control]="propertyAt($index).controls['houseNo']" fieldName="House no"></form-control-error>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Town</label>
+            <input class="form-control" formControlName="city" />
+            <form-control-error [control]="propertyAt($index).controls['city']" fieldName="Town"></form-control-error>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Address Line 1</label>
+            <input class="form-control" formControlName="streetAddress1" />
+            <form-control-error
+              [control]="propertyAt($index).controls['streetAddress1']"
+              fieldName="Address line 1"
+            ></form-control-error>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Address Line 2</label>
+            <input class="form-control" formControlName="streetAddress2" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Category</label>
+            <select class="form-select" formControlName="category">
+              @for (category of categories; track category.value) {
+                <option [value]="category.value">{{ category.label }}</option>
+              }
+            </select>
+          </div>
+
+          @if (isOther($index)) {
+            <div class="form-field">
+              <label class="form-label">Category Detail</label>
+              <input class="form-control" formControlName="categoryOther" placeholder="Describe the property type" />
+            </div>
+          }
+
+          <div class="form-field">
+            <label class="form-label">Province</label>
+            <select class="form-select" formControlName="province">
+              <option value="">Select province</option>
+              @for (option of provinces; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">District</label>
+            <select class="form-select" formControlName="district">
+              <option value="">Select district</option>
+              @for (option of districts; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-field">
+            <span class="form-label d-block">GPS Location</span>
+            <button
+              type="button"
+              class="btn btn-outline-secondary w-100"
+              [disabled]="locating() === '' + $index"
+              (click)="useCurrentLocation($index)"
+            >
+              <app-icon name="map-pin" [size]="16"></app-icon>
+              {{ locating() === '' + $index ? 'Getting location...' : 'Use current location' }}
+            </button>
+
+            @if (propertyAt($index).controls['latitude'].value !== null) {
+              <p class="coordinates">
+                {{ propertyAt($index).controls['latitude'].value }},
+                {{ propertyAt($index).controls['longitude'].value }}
+              </p>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="btn btn-outline-secondary w-100 mb-3" (click)="addProperty()">
+      <app-icon name="plus" [size]="16"></app-icon> Add another property
+    </button>
+
+    <h3 class="form-section"><app-icon name="user-plus" [size]="16"></app-icon> Other Members</h3>
+
+    <div formArrayName="members">
+      @for (member of members.controls; track $index) {
+        <div class="repeat-card" [formGroupName]="$index">
+          <header class="repeat-card__header">
+            <span class="repeat-card__title">Member {{ $index + 1 }}</span>
+            <button type="button" class="repeat-card__remove" (click)="removeMember($index)">
+              <app-icon name="trash" [size]="16"></app-icon>
+            </button>
+          </header>
+
+          <div class="form-field">
+            <label class="form-label">Name</label>
+            <input class="form-control" formControlName="fullName" />
+            <form-control-error [control]="memberAt($index).controls['fullName']" fieldName="Name"></form-control-error>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">NIC</label>
+            <input class="form-control" formControlName="nic" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Telephone</label>
+            <input class="form-control" formControlName="phone" />
+            <form-control-error [control]="memberAt($index).controls['phone']" fieldName="Telephone"></form-control-error>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Email</label>
+            <input class="form-control" type="email" formControlName="email" />
+            <form-control-error [control]="memberAt($index).controls['email']" fieldName="Email"></form-control-error>
+          </div>
+        </div>
+      } @empty {
+        <p class="members-empty">No other members added yet.</p>
+      }
+    </div>
+
+    <button type="button" class="btn btn-outline-secondary w-100" (click)="addMember()">
+      <app-icon name="plus" [size]="16"></app-icon> Add member
+    </button>
+  </form>
+</app-side-panel>

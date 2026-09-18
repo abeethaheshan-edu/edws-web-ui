@@ -25,6 +25,7 @@ export const ACCESS_ELEMENTS = {
   officialInvite: 'OFFICIAL_INVITE',
   teamAssignment: 'TEAM_ASSIGNMENT',
   disasterAlert: 'DISASTER_ALERT',
+  navCitizenRegistry: 'NAV_CITIZEN_REGISTRY',
   citizenRegistry: 'CITIZEN_REGISTRY',
   emergencyBroadcast: 'EMERGENCY_BROADCAST',
 } as const;
